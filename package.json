@@ -1,20 +1,19 @@
+
 {
-  "name": "password_extension",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
+  "name": "password-extension",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+   
+    "scripts": {
+    "typecheck": "tsc",
+    "build": "tsc && vite build",
+    "test": "vitest"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "typescript": "^7.0.2",
     "vite": "^8.3.8",
     "vitest": "^5.1.0"
   }
+
 }
