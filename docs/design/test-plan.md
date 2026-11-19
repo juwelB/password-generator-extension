@@ -46,8 +46,8 @@ Tests are written before the implementation (test-driven development).
 ## 5. Entropy
 | # | Test | Expected |
 |---|---|---|
-| 5.1 | All four sets, length 16 | ≈ 99 bits |
-| 5.2 | All four sets, length 32 | ≈ 199 bits |
+| 5.1 | All four sets, length 16 | ≈ 103 bits |
+| 5.2 | All four sets, length 32 | ≈ 207 bits |
 | 5.3 | Lowercase only, length 16 | ≈ 75 bits |
 
 ## 6. Invalid input

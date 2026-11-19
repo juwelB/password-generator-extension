@@ -2,7 +2,7 @@
 
 **Module:** `src/generator/generator.ts`
 **Status:** Approved for v1
-**Related decisions:** PWX-0003, PWX-0004, PWX-0005, PWX-0007, PWX-0008
+**Related decisions:** PWX-0003, PWX-0005, PWX-0007, PWX-0008, PWX-0009
 
 ## Summary
 The generator takes a length from 8 to 32 and at least one of four character
@@ -22,18 +22,18 @@ export const MIN_LENGTH = 8;
 export const MAX_LENGTH = 32;
 export const DEFAULT_LENGTH = 16;
 
-export type CharacterSet = 'uppercase' | 'lowercase' | 'digits' | 'symbols';
+export type CharSet = 'upperCase' | 'lowerCase' | 'digits' | 'symbols';
 
-export const CHARACTER_SETS: Record<CharacterSet, string> = {
-  uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-  lowercase: 'abcdefghijklmnopqrstuvwxyz',
+export const CHAR_SETS: Record<CharSet, string> = {
+  upperCase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+  lowerCase: 'abcdefghijklmnopqrstuvwxyz',
   digits:    '0123456789',
-  symbols:   '!@#$%^&*-_=+',
+  symbols:   '!@#$%^&*()_+-=[]{}|;:,.<>?',
 };
 
 export interface GeneratorOptions {
   length: number;                  // whole number, MIN_LENGTH to MAX_LENGTH
-  sets: readonly CharacterSet[];   // at least one
+  sets: readonly CharSet[];         // at least one
 }
 
 export interface GeneratedPassword {
@@ -42,7 +42,7 @@ export interface GeneratedPassword {
 }
 
 // Same shape as crypto.getRandomValues, so tests can pass a fake
-export type RandomSource = (buffer: Uint32Array) => Uint32Array;
+export type RandomSource = (buffer: Uint32Array<ArrayBuffer>) => Uint32Array<ArrayBuffer>;
 
 export type GeneratorErrorCode =
   | 'INVALID_LENGTH'
@@ -79,7 +79,7 @@ in the selected sets combined.
 
 | Sets selected | Pool size | 16 chars | 32 chars |
 |---|---|---|---|
-| All four | 74 | ≈ 99 bits | ≈ 199 bits |
+| All four | 88 | ≈ 103 bits | ≈ 207 bits |
 | Letters and digits | 62 | ≈ 95 bits | ≈ 191 bits |
 | Lowercase only | 26 | ≈ 75 bits | ≈ 150 bits |
 
@@ -94,7 +94,7 @@ strength display.
 |---|---|
 | `INVALID_LENGTH` | `length` is not a whole number from 8 to 32 |
 | `NO_CHARACTER_SETS` | `sets` is empty |
-| `UNKNOWN_CHARACTER_SET` | `sets` contains a value not in `CHARACTER_SETS` |
+| `UNKNOWN_CHARACTER_SET` | `sets` contains a value not in `CHAR_SETS` |
 
 Duplicate sets (for example, `['digits', 'digits']`) are treated as a single
 selection, not an error.

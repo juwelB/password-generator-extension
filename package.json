@@ -1,11 +1,9 @@
-
 {
   "name": "password-extension",
-    "version": "0.1.0",
-    "private": true,
-    "type": "module",
-   
-    "scripts": {
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
     "typecheck": "tsc",
     "build": "tsc && vite build",
     "test": "vitest"
@@ -15,5 +13,4 @@
     "vite": "^8.3.8",
     "vitest": "^5.1.0"
   }
-
 }
