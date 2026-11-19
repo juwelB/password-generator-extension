@@ -71,6 +71,7 @@ export function generatePassword(
     while (chars.length < options.length) {
         chars.push(pool[randomIndex(pool.length, random)]!);
     }
+
     shuffle(chars, random);
     const password = chars.join("");
 
