@@ -146,14 +146,14 @@ describe("generatePassword", () => {
     });
 
     describe("entropy", () => {
-        it("5.1 reports about 103 bits for all sets at length 16", () => {
+        it("5.1 reports about 102.8 bits for all sets at length 16", () => {
             const { entropyBits } = generatePassword({ length: 16, sets: ALL_SETS });
-            expect(entropyBits).toBeCloseTo(103.35, 1);
+            expect(entropyBits).toBeCloseTo(102.82, 1);
         });
 
-        it("5.2 reports about 207 bits for all sets at length 32", () => {
+        it("5.2 reports about 205.6 bits for all sets at length 32", () => {
             const { entropyBits } = generatePassword({ length: 32, sets: ALL_SETS });
-            expect(entropyBits).toBeCloseTo(206.7, 1);
+            expect(entropyBits).toBeCloseTo(205.64, 1);
         });
 
         it("5.3 reports about 75 bits for lowercase only at length 16", () => {

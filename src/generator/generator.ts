@@ -9,7 +9,7 @@ export const CHAR_SETS: Record<CharSet, string> = {
     upperCase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
     lowerCase: 'abcdefghijklmnopqrstuvwxyz',
     digits: '0123456789',
-    symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
+    symbols: '!@#$%^&*()_+-=[]{}|;:<>?'
 };
 
 export interface GeneratorOptions {

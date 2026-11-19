@@ -17,4 +17,5 @@ This index is the place to look up what each ID covers.
 | [PWX-0006](PWX-0006.md) | Auto-generate a password when the popup opens | Accepted |
 | [PWX-0007](PWX-0007.md) | Popup behavior defaults | Accepted |
 | [PWX-0008](PWX-0008.md) | Throw a typed error on invalid generator input | Accepted |
-| [PWX-0009](PWX-0009.md) | Use an expanded symbol set | Accepted |
+| [PWX-0009](PWX-0009.md) | Use an expanded symbol set | Superseded by PWX-0010 |
+| [PWX-0010](PWX-0010.md) | Remove period and comma from the symbol set | Accepted |

@@ -2,7 +2,7 @@
 
 **Module:** `src/generator/generator.ts`
 **Status:** Approved for v1
-**Related decisions:** PWX-0003, PWX-0005, PWX-0007, PWX-0008, PWX-0009
+**Related decisions:** PWX-0003, PWX-0005, PWX-0007, PWX-0008, PWX-0010
 
 ## Summary
 The generator takes a length from 8 to 32 and at least one of four character
@@ -28,7 +28,7 @@ export const CHAR_SETS: Record<CharSet, string> = {
   upperCase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
   lowerCase: 'abcdefghijklmnopqrstuvwxyz',
   digits:    '0123456789',
-  symbols:   '!@#$%^&*()_+-=[]{}|;:,.<>?',
+  symbols:   '!@#$%^&*()_+-=[]{}|;:<>?',
 };
 
 export interface GeneratorOptions {
@@ -79,7 +79,7 @@ in the selected sets combined.
 
 | Sets selected | Pool size | 16 chars | 32 chars |
 |---|---|---|---|
-| All four | 88 | ≈ 103 bits | ≈ 207 bits |
+| All four | 86 | ≈ 102.8 bits | ≈ 205.6 bits |
 | Letters and digits | 62 | ≈ 95 bits | ≈ 191 bits |
 | Lowercase only | 26 | ≈ 75 bits | ≈ 150 bits |
 
