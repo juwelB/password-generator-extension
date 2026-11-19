@@ -3,27 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <title>Password Generator</title>
+    <link rel="stylesheet" href="./popup.css" />
   </head>
   <body>
     <main>
-      <output id="password"></output>
+      <output id="password" class="password"></output>
+      <p id="entropy" class="strength"></p>
 
-      <div>
+      <div class="actions">
+        <button id="copy" type="button" class="primary">Copy</button>
         <button id="regenerate" type="button">Regenerate</button>
-        <button id="copy" type="button">Copy</button>
       </div>
 
-      <p id="entropy"></p>
+      <div class="length">
+        <label for="length">Length <span id="length-value"></span></label>
+        <input id="length" type="range" />
+      </div>
 
-      <label for="length">Length: <span id="length-value"></span></label>
-      <input id="length" type="range" />
-
-      <fieldset>
-        <legend>Characters</legend>
-        <label><input type="checkbox" data-set="upperCase" /> Uppercase</label>
-        <label><input type="checkbox" data-set="lowerCase" /> Lowercase</label>
-        <label><input type="checkbox" data-set="digits" /> Digits</label>
-        <label><input type="checkbox" data-set="symbols" /> Symbols</label>
+      <fieldset class="sets">
+        <legend class="visually-hidden">Characters to include</legend>
+        <label
+          ><input type="checkbox" data-set="upperCase" aria-label="Uppercase letters" />A–Z</label
+        >
+        <label
+          ><input type="checkbox" data-set="lowerCase" aria-label="Lowercase letters" />a–z</label
+        >
+        <label class="digit"
+          ><input type="checkbox" data-set="digits" aria-label="Digits" />0–9</label
+        >
+        <label class="symbol"
+          ><input type="checkbox" data-set="symbols" aria-label="Symbols" />!@#</label
+        >
       </fieldset>
     </main>
 

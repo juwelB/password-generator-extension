@@ -74,10 +74,23 @@ async function copy(): Promise<void> {
     }, 2000);
 }
 
+
+function charClass(c: string): string {
+    if (CHAR_SETS.digits.includes(c)) return "digit";
+    if (CHAR_SETS.symbols.includes(c)) return "symbol";
+    return "letter";
+}
 // ---------- Render: draw the screen from state ----------
 
 function render(): void {
-    passwordOutput.textContent = state.password;
+    passwordOutput.replaceChildren(
+        ...[...state.password].map((c) => {
+            const span = document.createElement("span");
+            span.className = charClass(c);
+            span.textContent = c;
+            return span;
+        }),
+    );
     entropyText.textContent = `≈ ${Math.round(state.entropyBits)} bits`;
     lengthSlider.value = String(state.length);
     lengthValue.textContent = String(state.length);
