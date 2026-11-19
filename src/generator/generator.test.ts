@@ -2,12 +2,24 @@ import { describe, it, expect } from "vitest";
 import {
     generatePassword,
     GeneratorError,
+    CHAR_SETS,
     type CharSet,
     type GeneratorErrorCode,
 } from "./generator";
 
 const ALL_SETS: CharSet[] = ["upperCase", "lowerCase", "digits", "symbols"];
 
+const RUNS = 1000;
+
+// True if the password contains at least one character from chars.
+function containsAny(password: string, chars: string): boolean {
+    return [...password].some((c) => chars.includes(c));
+}
+
+// True if every character of the password comes from chars.
+function onlyFrom(password: string, chars: string): boolean {
+    return [...password].every((c) => chars.includes(c));
+}
 // Checks that fn throws a GeneratorError with the given code.
 function expectGeneratorError(fn: () => unknown, code: GeneratorErrorCode): void {
     try {
@@ -37,6 +49,36 @@ describe("generatePassword", () => {
         it("1.3 produces exactly 32 characters at the upper boundary", () => {
             const result = generatePassword({ length: 32, sets: ALL_SETS });
             expect(result.password).toHaveLength(32);
+        });
+
+
+    });
+
+    describe("character rules", () => {
+        it("2.1 includes every selected set", () => {
+            for (let i = 0; i < RUNS; i++) {
+                const { password } = generatePassword({ length: 16, sets: ALL_SETS });
+                for (const set of ALL_SETS) {
+                    expect(containsAny(password, CHAR_SETS[set]), `${password} is missing ${set}`).toBe(true);
+                }
+            }
+        });
+
+        it("2.2 uses no characters from unselected sets", () => {
+            const allowed = CHAR_SETS.lowerCase + CHAR_SETS.digits;
+            for (let i = 0; i < RUNS; i++) {
+                const { password } = generatePassword({ length: 16, sets: ["lowerCase", "digits"] });
+                expect(onlyFrom(password, allowed), `${password} has a disallowed character`).toBe(true);
+            }
+        });
+
+        it("2.3 uses only the chosen set when one set is selected", () => {
+            for (const set of ALL_SETS) {
+                for (let i = 0; i < RUNS; i++) {
+                    const { password } = generatePassword({ length: 16, sets: [set] });
+                    expect(onlyFrom(password, CHAR_SETS[set]), `${password} is not all ${set}`).toBe(true);
+                }
+            }
         });
 
 

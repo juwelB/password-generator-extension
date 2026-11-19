@@ -44,7 +44,12 @@ export class GeneratorError extends Error {
         this.name = "GeneratorError";
         this.code = code;
     }
+
+
 }
+
+
+
 
 export function generatePassword(
     options: GeneratorOptions,
@@ -83,7 +88,6 @@ function validateOptions(options: GeneratorOptions): void {
         }
     }
 
-    const uniqueSets = [... new Set(options.sets)];
 }
 
 
