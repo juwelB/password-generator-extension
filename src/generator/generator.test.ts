@@ -5,11 +5,21 @@ import {
     CHAR_SETS,
     type CharSet,
     type GeneratorErrorCode,
+    type RandomSource
 } from "./generator";
 
 const ALL_SETS: CharSet[] = ["upperCase", "lowerCase", "digits", "symbols"];
-
 const RUNS = 1000;
+
+// A fake random source that returns the given values in order, then 0 forever.
+function fakeSource(values: number[]): RandomSource {
+    let i = 0;
+    return (buffer) => {
+        buffer[0] = values[i] ?? 0;
+        i++;
+        return buffer;
+    };
+}
 
 // True if the password contains at least one character from chars.
 function containsAny(password: string, chars: string): boolean {
@@ -96,6 +106,63 @@ describe("generatePassword", () => {
 
 
     });
+    describe("randomness quality", () => {
+        it("3.1 gives different passwords on consecutive calls", () => {
+            const a = generatePassword({ length: 16, sets: ALL_SETS }).password;
+            const b = generatePassword({ length: 16, sets: ALL_SETS }).password;
+            expect(a).not.toBe(b);
+        });
+
+        it("3.2 uses every character about equally often", () => {
+            const chars = CHAR_SETS.lowerCase;
+            const counts = new Map<string, number>();
+            const passwords = 10_000;
+            for (let i = 0; i < passwords; i++) {
+                for (const c of generatePassword({ length: 16, sets: ["lowerCase"] }).password) {
+                    counts.set(c, (counts.get(c) ?? 0) + 1);
+                }
+            }
+            const expected = (passwords * 16) / chars.length;
+            for (const c of chars) {
+                const count = counts.get(c) ?? 0;
+                expect(Math.abs(count - expected), `'${c}' appeared ${count} times`).toBeLessThan(expected * 0.1);
+            }
+        });
+    });
+
+    describe("fake random source", () => {
+        it("4.1 gives identical passwords for identical random values", () => {
+            const values = [5, 17, 42, 99, 3, 8, 1, 60];
+            const a = generatePassword({ length: 8, sets: ALL_SETS }, fakeSource(values)).password;
+            const b = generatePassword({ length: 8, sets: ALL_SETS }, fakeSource(values)).password;
+            expect(a).toBe(b);
+        });
+
+        it("4.2 discards values in the biased range", () => {
+            const biased = 0xffffffff;
+            const result = generatePassword({ length: 8, sets: ["digits"] }, fakeSource([biased]));
+            expect(result.password).toBe("00000000");
+        });
+    });
+
+    describe("entropy", () => {
+        it("5.1 reports about 103 bits for all sets at length 16", () => {
+            const { entropyBits } = generatePassword({ length: 16, sets: ALL_SETS });
+            expect(entropyBits).toBeCloseTo(103.35, 1);
+        });
+
+        it("5.2 reports about 207 bits for all sets at length 32", () => {
+            const { entropyBits } = generatePassword({ length: 32, sets: ALL_SETS });
+            expect(entropyBits).toBeCloseTo(206.7, 1);
+        });
+
+        it("5.3 reports about 75 bits for lowercase only at length 16", () => {
+            const { entropyBits } = generatePassword({ length: 16, sets: ["lowerCase"] });
+            expect(entropyBits).toBeCloseTo(75.2, 1);
+        });
+    });
+
+
 
     describe("invalid input", () => {
         it("6.1 rejects length 7", () => {

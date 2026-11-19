@@ -71,9 +71,8 @@ export function generatePassword(
     while (chars.length < options.length) {
         chars.push(pool[randomIndex(pool.length, random)]!);
     }
-
-    const password = chars.join("");
     shuffle(chars, random);
+    const password = chars.join("");
 
     const entropyBits = options.length * Math.log2(pool.length);
     return { password, entropyBits };
