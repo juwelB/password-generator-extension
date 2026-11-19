@@ -50,12 +50,20 @@ export function generatePassword(
     options: GeneratorOptions,
     random: RandomSource = (b) => crypto.getRandomValues(b),
 ): GeneratedPassword {
-
     validateOptions(options);
-    throw new Error("Not implemented");
 
+    const uniqueSets = [...new Set(options.sets)];
+    const pool = uniqueSets.map((set) => CHAR_SETS[set]).join("");
 
+    let password = "";
+    for (let i = 0; i < options.length; i++) {
+        password += pool[randomIndex(pool.length, random)]!;
+    }
+
+    const entropyBits = options.length * Math.log2(pool.length);
+    return { password, entropyBits };
 }
+
 
 
 function validateOptions(options: GeneratorOptions): void {
@@ -72,6 +80,22 @@ function validateOptions(options: GeneratorOptions): void {
     for (const set of sets) {
         if (!Object.hasOwn(CHAR_SETS, set)) {
             throw new GeneratorError("UNKNOWN_CHARACTER_SET", `Unknown character set: ${set}`);
+        }
+    }
+
+    const uniqueSets = [... new Set(options.sets)];
+}
+
+
+function randomIndex(max: number, random: RandomSource): number {
+    const range = 2 ** 32;
+    const limit = range - (range % max);
+    const buffer = new Uint32Array(1);
+
+    while (true) {
+        const value = random(buffer)[0]!;
+        if (value < limit) {
+            return value % max;
         }
     }
 }
