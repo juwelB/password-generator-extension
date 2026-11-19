@@ -50,5 +50,28 @@ export function generatePassword(
     options: GeneratorOptions,
     random: RandomSource = (b) => crypto.getRandomValues(b),
 ): GeneratedPassword {
+
+    validateOptions(options);
     throw new Error("Not implemented");
+
+
+}
+
+
+function validateOptions(options: GeneratorOptions): void {
+    const { length, sets } = options;
+
+    if (!Number.isInteger(length) || length < MIN_LENGTH || length > MAX_LENGTH) {
+        throw new GeneratorError("INVALID_LENGTH", "Length must be a whole number from 8 to 32");
+    }
+
+    if (sets.length === 0) {
+        throw new GeneratorError("NO_CHARACTER_SETS", "At least one character set must be selected");
+    }
+
+    for (const set of sets) {
+        if (!Object.hasOwn(CHAR_SETS, set)) {
+            throw new GeneratorError("UNKNOWN_CHARACTER_SET", `Unknown character set: ${set}`);
+        }
+    }
 }
