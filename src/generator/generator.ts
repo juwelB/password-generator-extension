@@ -59,11 +59,20 @@ export function generatePassword(
 
     const uniqueSets = [...new Set(options.sets)];
     const pool = uniqueSets.map((set) => CHAR_SETS[set]).join("");
+    const chars: string[] = [];
 
-    let password = "";
-    for (let i = 0; i < options.length; i++) {
-        password += pool[randomIndex(pool.length, random)]!;
+    // One character from each selected set
+    for (const set of uniqueSets) {
+        const setChars = CHAR_SETS[set];
+        chars.push(setChars[randomIndex(setChars.length, random)]!);
     }
+
+    // Fill the rest from the whole pool
+    while (chars.length < options.length) {
+        chars.push(pool[randomIndex(pool.length, random)]!);
+    }
+
+    const password = chars.join("");
 
     const entropyBits = options.length * Math.log2(pool.length);
     return { password, entropyBits };
