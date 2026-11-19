@@ -81,6 +81,19 @@ describe("generatePassword", () => {
             }
         });
 
+        it("2.4 places guaranteed characters in any position", () => {
+            const firstCharSets = new Set<CharSet>();
+            for (let i = 0; i < RUNS; i++) {
+                const { password } = generatePassword({ length: 16, sets: ALL_SETS });
+                for (const set of ALL_SETS) {
+                    if (CHAR_SETS[set].includes(password[0]!)) {
+                        firstCharSets.add(set);
+                    }
+                }
+            }
+            expect(firstCharSets.size).toBe(4);
+        });
+
 
     });
 

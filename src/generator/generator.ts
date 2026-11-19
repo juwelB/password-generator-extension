@@ -73,6 +73,7 @@ export function generatePassword(
     }
 
     const password = chars.join("");
+    shuffle(chars, random);
 
     const entropyBits = options.length * Math.log2(pool.length);
     return { password, entropyBits };
@@ -110,5 +111,13 @@ function randomIndex(max: number, random: RandomSource): number {
         if (value < limit) {
             return value % max;
         }
+    }
+}
+
+
+function shuffle(items: string[], random: RandomSource): void {
+    for (let i = items.length - 1; i > 0; i--) {
+        const j = randomIndex(i + 1, random);
+        [items[i], items[j]] = [items[j]!, items[i]!];
     }
 }

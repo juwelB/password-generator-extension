@@ -30,6 +30,7 @@ Tests are written before the implementation (test-driven development).
 | 2.1 | All four sets selected | Every password contains at least one character from each set |
 | 2.2 | A subset selected (for example, lowercase and digits) | No characters from unselected sets |
 | 2.3 | Each set alone | Every character comes from that set |
+| 2.4 | All four sets, first character of each password | Every set appears in the first position at least once (guaranteed characters are shuffled) |
 
 ## 3. Randomness quality
 | # | Test | Expected |
