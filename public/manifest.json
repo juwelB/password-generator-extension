@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Password Generator",
+  "version": "0.1.0",
+  "description": "Generates strong random passwords. Nothing is stored or sent anywhere.",
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_title": "Generate a password"
+  }
+}
