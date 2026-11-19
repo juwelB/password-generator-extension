@@ -9,7 +9,7 @@ This index is the place to look up what each ID covers.
 
 | ID | Decision | Status |
 |---|---|---|
-| [PWX-0001](PWX-0001.md) | Use TypeScript, Vite, and Manifest V3 | Accepted |
+| [PWX-0001](PWX-0001.md) | Use TypeScript, Vite, and Manifest V3 | Accepted; linting superseded by PWX-0011 |
 | [PWX-0002](PWX-0002.md) | Limit v1 to a popup, with no stored passwords | Accepted |
 | [PWX-0003](PWX-0003.md) | Use a functional-core, imperative-shell architecture | Accepted |
 | [PWX-0004](PWX-0004.md) | Use a safe subset of symbols | Superseded by PWX-0009 |
@@ -19,3 +19,4 @@ This index is the place to look up what each ID covers.
 | [PWX-0008](PWX-0008.md) | Throw a typed error on invalid generator input | Accepted |
 | [PWX-0009](PWX-0009.md) | Use an expanded symbol set | Superseded by PWX-0010 |
 | [PWX-0010](PWX-0010.md) | Remove period and comma from the symbol set | Accepted |
+| [PWX-0011](PWX-0011.md) | Use Oxlint instead of ESLint | Accepted |
