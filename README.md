@@ -1,3 +1,5 @@
+<img src="public/icons/icon-128.png" alt="" width="72">
+
 # Password Generator
 
 [![CI](https://github.com/juwelB/password-generator-extension/actions/workflows/ci.yml/badge.svg)](https://github.com/juwelB/password-generator-extension/actions/workflows/ci.yml)
