@@ -4,8 +4,8 @@
 
 [![CI](https://github.com/juwelB/password-generator-extension/actions/workflows/ci.yml/badge.svg)](https://github.com/juwelB/password-generator-extension/actions/workflows/ci.yml)
 
-A Chrome and Edge extension that generates strong random passwords in one
-click. It requests no permissions, stores nothing, and never touches the
+A Chrome, Edge, and Brave extension that generates strong random passwords
+in one click. It requests no permissions, stores nothing, and never touches the
 network: passwords exist only in the popup and on your clipboard.
 
 ![The popup in light and dark mode](docs/images/popup.png)
@@ -79,7 +79,7 @@ npm run build
 
 Then load it into the browser:
 
-1. Open `chrome://extensions` (or `edge://extensions`).
+1. Open `chrome://extensions` (or `edge://extensions` or `brave://extensions`).
 2. Turn on **Developer mode**.
 3. Click **Load unpacked** and select the `dist` folder.
 
@@ -114,3 +114,7 @@ changed twice and why the project uses Oxlint instead of ESLint.
 - Passphrase mode (random words instead of characters)
 - A right-click menu to fill password fields directly
 - End-to-end browser tests with Playwright
+
+## License
+
+[MIT](LICENSE)
